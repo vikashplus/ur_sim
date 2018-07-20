@@ -1,0 +1,103 @@
+<mujoco model="ur10">
+    <compiler angle="radian"/>
+    <size njmax="500" nconmax="100" />
+    <asset>
+        <mesh name="ur_pedestal" file="meshes/pedestal.stl" scale='.001 .001 .001'/>
+		<mesh name="ur_base" file="meshes/base.stl" />
+        <mesh name="ur_shoulder" file="meshes/shoulder.stl" />
+        <mesh name="ur_upperarm" file="meshes/upperarm.stl" />
+        <mesh name="ur_forearm" file="meshes/forearm.stl" />
+        <mesh name="ur_wrist1" file="meshes/wrist1.stl" />
+        <mesh name="ur_wrist2" file="meshes/wrist2.stl" />
+        <mesh name="ur_wrist3" file="meshes/wrist3.stl" />
+        <mesh name="ur_simple_base" file="meshes/simple_base.stl" />
+        <mesh name="ur_simple_shoulder" file="meshes/simple_shoulder.stl" />
+        <mesh name="ur_simple_upperarm" file="meshes/simple_upperarm.stl" />
+        <mesh name="ur_simple_forearm" file="meshes/simple_forearm.stl" />
+        <mesh name="ur_simple_wrist1" file="meshes/simple_wrist1.stl" />
+        <mesh name="ur_simple_wrist2" file="meshes/simple_wrist2.stl" />
+        <mesh name="ur_simple_wrist3" file="meshes/simple_wrist3.stl" />
+        
+		<texture name="ur_groundplane" type="2d" builtin="checker" rgb1=".25 .26 .25" 
+			rgb2=".22 .22 .22" width="100" height="100" mark="none" markrgb=".8 .8 .8"/>
+		<material name="ur_MatColl" specular="1" shininess=".3" reflectance="0.5" rgba=".4 .5 .6 1"/>
+		<material name="ur_MatViz" specular="1" shininess=".1" reflectance="0.5" rgba=".9 .9 .9 1"/>
+		<material name="ur_MatGnd" texture="ur_groundplane"  texrepeat="5 5" specular="1" shininess=".3" reflectance="0.00001"/>
+    </asset>
+	
+	<visual>
+        <map fogstart="1.5" fogend="4" force="0.1"/>
+        <quality shadowsize="4096"/>
+    </visual>
+	
+	<default>
+		<geom material="ur_MatColl" contype="0" conaffinity="1" group="4" type="mesh"/>
+		<joint limited="true" damping="50" armature=".001" margin="0.01" frictionloss="100"/>
+		
+		<!--Viz geoms-->
+		<default class="ur_viz">
+			<geom material="ur_MatViz" contype="0" conaffinity="0" group="1"/>
+		</default>
+	</default>
+	
+    <worldbody>
+	
+	<light directional="false" cutoff="40" diffuse=".3 .3 .35" specular=".1 .1 .1" pos="1 .3 5" dir="-1 -.1 -5 "/>
+	
+		<!-- ======= Ground ======= -->
+		<geom name="ground" type="plane" pos="0 0 0" material="ur_MatGnd" size="5 5 2" contype="1" conaffinity="1"/>
+		<geom class="ur_viz" name='ur_pedestal' pos='0 0 0' type='mesh' mesh='ur_pedestal' euler='0 0 1.57'/>
+		
+        <body name="ur_ur_base_link" pos="0 0 .74">
+            <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="4" diaginertia="0.01125 0.00610633 0.00610633" />
+            <geom class="ur_viz" mesh="ur_base" />
+            <geom mesh="ur_simple_base" />
+            <body name="ur_shoulder_link" pos="0 0 0.1273">
+                <inertial pos="0 0 0" mass="7.778" diaginertia="0.0314743 0.0314743 0.0218756" />
+                <joint name="ur_shoulder_pan_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" />
+                <geom class="ur_viz" mesh="ur_shoulder" rgba=".5 .8 .95 1"/>
+                <geom mesh="ur_simple_shoulder" />
+                <body name="ur_upper_arm_link" pos="0 0.220941 0" quat="0.707107 0 0.707107 0">
+                    <inertial pos="0 0 0.306" mass="12.93" diaginertia="0.421754 0.421754 0.0363656" />
+                    <joint name="ur_shoulder_lift_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-6.28319 6.28319" />
+                    <geom class="ur_viz" mesh="ur_upperarm" />
+                    <geom mesh="ur_simple_upperarm" />
+                    <body name="ur_forearm_link" pos="0 -0.1719 0.612">
+                        <inertial pos="0 0 0.28615" mass="3.87" diaginertia="0.11107 0.11107 0.0108844" />
+                        <joint name="ur_elbow_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-6.28319 6.28319" />
+                        <geom class="ur_viz" mesh="ur_forearm" />
+                        <geom mesh="ur_simple_forearm" />
+                        <body name="ur_wrist_1_link" pos="0 0 0.5723" quat="0.707107 0 0.707107 0">
+                            <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="1.96" diaginertia="0.0055125 0.00510825 0.00510825" />
+                            <joint name="ur_wrist_1_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-6.28319 6.28319" />
+                            <geom class="ur_viz" mesh="ur_wrist1" />
+                            <geom mesh="ur_simple_wrist1" />
+                            <body name="ur_wrist_2_link" pos="0 0.1149 0">
+                                <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="1.96" diaginertia="0.0055125 0.00510825 0.00510825" />
+                                <joint name="ur_wrist_2_joint" pos="0 0 0" axis="0 0 1" limited="true" range="-6.28319 6.28319" />
+                                <geom class="ur_viz" mesh="ur_wrist2" rgba=".5 .8 .95 1"/>
+                                <geom mesh="ur_simple_wrist2" />
+                                <body name="ur_wrist_3_link" pos="0 0 0.1157">
+                                    <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="0.202" diaginertia="0.000568125 0.000526462 0.000526462" />
+                                    <joint name="ur_wrist_3_joint" pos="0 0 0" axis="0 1 0" limited="true" range="-6.28319 6.28319" />
+                                    <geom class="ur_viz" mesh="ur_wrist3" />
+                                    <geom mesh="ur_simple_wrist3" />
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+	
+	<actuator>
+		<position name="ur_shoulder_pan_joint" joint="ur_shoulder_pan_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="1000"/>
+		<position name="ur_shoulder_lift_joint" joint="ur_shoulder_lift_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="1000"/>
+		<position name="ur_elbow_joint" joint="ur_elbow_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="600"/>
+		<position name="ur_wrist_1_joint" joint="ur_wrist_1_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="200"/>
+		<position name="ur_wrist_2_joint" joint="ur_wrist_2_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="200"/>
+		<position name="ur_wrist_3_joint" joint="ur_wrist_3_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="200"/>
+	</actuator>
+	
+</mujoco>
