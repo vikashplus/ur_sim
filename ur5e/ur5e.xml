@@ -37,26 +37,26 @@
     <material class="ur5e" name="linkgray" rgba="0.82 0.82 0.82 1"/>
     <material class="ur5e" name="urblue" rgba="0.49 0.678 0.8 1"/>
 
-    <mesh file="base_0.obj"/>
-    <mesh file="base_1.obj"/>
-    <mesh file="shoulder_0.obj"/>
-    <mesh file="shoulder_1.obj"/>
-    <mesh file="shoulder_2.obj"/>
-    <mesh file="upperarm_0.obj"/>
-    <mesh file="upperarm_1.obj"/>
-    <mesh file="upperarm_2.obj"/>
-    <mesh file="upperarm_3.obj"/>
-    <mesh file="forearm_0.obj"/>
-    <mesh file="forearm_1.obj"/>
-    <mesh file="forearm_2.obj"/>
-    <mesh file="forearm_3.obj"/>
-    <mesh file="wrist1_0.obj"/>
-    <mesh file="wrist1_1.obj"/>
-    <mesh file="wrist1_2.obj"/>
-    <mesh file="wrist2_0.obj"/>
-    <mesh file="wrist2_1.obj"/>
-    <mesh file="wrist2_2.obj"/>
-    <mesh file="wrist3.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/base_0.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/base_1.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/shoulder_0.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/shoulder_1.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/shoulder_2.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/upperarm_0.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/upperarm_1.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/upperarm_2.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/upperarm_3.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/forearm_0.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/forearm_1.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/forearm_2.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/forearm_3.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/wrist1_0.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/wrist1_1.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/wrist1_2.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/wrist2_0.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/wrist2_1.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/wrist2_2.obj"/>
+    <mesh file="../../ur_sim/ur5e/assets/wrist3.obj"/>
   </asset>
 
   <worldbody>
@@ -120,6 +120,15 @@
       </body>
     </body>
   </worldbody>
+
+  <sensor>
+    <jointpos name="shoulder_pan_joint" joint="shoulder_pan_joint"/>
+    <jointpos name="shoulder_lift_joint" joint="shoulder_lift_joint"/>
+    <jointpos name="elbow_joint" joint="elbow_joint"/>
+    <jointpos name="wrist_1_joint" joint="wrist_1_joint"/>
+    <jointpos name="wrist_2_joint" joint="wrist_2_joint"/>
+    <jointpos name="wrist_3_joint" joint="wrist_3_joint"/>
+  </sensor>
 
   <actuator>
     <general class="size3" name="shoulder_pan" joint="shoulder_pan_joint"/>
