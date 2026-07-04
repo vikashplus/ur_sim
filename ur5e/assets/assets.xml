@@ -66,12 +66,20 @@
   </asset>
 
   <sensor>
-    <jointpos name="shoulder_pan_joint" joint="shoulder_pan_joint"/>
-    <jointpos name="shoulder_lift_joint" joint="shoulder_lift_joint"/>
-    <jointpos name="elbow_joint" joint="elbow_joint"/>
-    <jointpos name="wrist_1_joint" joint="wrist_1_joint"/>
-    <jointpos name="wrist_2_joint" joint="wrist_2_joint"/>
-    <jointpos name="wrist_3_joint" joint="wrist_3_joint"/>
+    <jointpos name="shoulder_pan_pos" joint="shoulder_pan_joint"/>
+    <jointpos name="shoulder_lift_pos" joint="shoulder_lift_joint"/>
+    <jointpos name="elbow_pos" joint="elbow_joint"/>
+    <jointpos name="wrist_1_pos" joint="wrist_1_joint"/>
+    <jointpos name="wrist_2_pos" joint="wrist_2_joint"/>
+    <jointpos name="wrist_3_pos" joint="wrist_3_joint"/>
+
+    <jointactuatorfrc name="shoulder_pan_effort" joint="shoulder_pan_joint"/>
+    <jointactuatorfrc name="shoulder_lift_effort" joint="shoulder_lift_joint"/>
+    <jointactuatorfrc name="elbow_effort" joint="elbow_joint"/>
+    <jointactuatorfrc name="wrist_1_effort" joint="wrist_1_joint"/>
+    <jointactuatorfrc name="wrist_2_effort" joint="wrist_2_joint"/>
+    <jointactuatorfrc name="wrist_3_effort" joint="wrist_3_joint"/>
+
   </sensor>
 
   <actuator>
