@@ -8,20 +8,20 @@
     <compiler angle="radian"/>
     <size njmax="500" nconmax="100" />
     <asset>
-        <mesh name="ur_base" file="meshes/base.stl" />
-        <mesh name="ur_shoulder" file="meshes/shoulder.stl" />
-        <mesh name="ur_upperarm" file="meshes/upperarm.stl" />
-        <mesh name="ur_forearm" file="meshes/forearm.stl" />
-        <mesh name="ur_wrist1" file="meshes/wrist1.stl" />
-        <mesh name="ur_wrist2" file="meshes/wrist2.stl" />
-        <mesh name="ur_wrist3" file="meshes/wrist3.stl" />
-        <mesh name="ur_simple_base" file="meshes/simple_base.stl" />
-        <mesh name="ur_simple_shoulder" file="meshes/simple_shoulder.stl" />
-        <mesh name="ur_simple_upperarm" file="meshes/simple_upperarm.stl" />
-        <mesh name="ur_simple_forearm" file="meshes/simple_forearm.stl" />
-        <mesh name="ur_simple_wrist1" file="meshes/simple_wrist1.stl" />
-        <mesh name="ur_simple_wrist2" file="meshes/simple_wrist2.stl" />
-        <mesh name="ur_simple_wrist3" file="meshes/simple_wrist3.stl" />
+        <mesh name="ur_base" file="../../ur_sim/ur10/meshes/base.stl" />
+        <mesh name="ur_shoulder" file="../../ur_sim/ur10/meshes/shoulder.stl" />
+        <mesh name="ur_upperarm" file="../../ur_sim/ur10/meshes/upperarm.stl" />
+        <mesh name="ur_forearm" file="../../ur_sim/ur10/meshes/forearm.stl" />
+        <mesh name="ur_wrist1" file="../../ur_sim/ur10/meshes/wrist1.stl" />
+        <mesh name="ur_wrist2" file="../../ur_sim/ur10/meshes/wrist2.stl" />
+        <mesh name="ur_wrist3" file="../../ur_sim/ur10/meshes/wrist3.stl" />
+        <mesh name="ur_simple_base" file="../../ur_sim/ur10/meshes/simple_base.stl" />
+        <mesh name="ur_simple_shoulder" file="../../ur_sim/ur10/meshes/simple_shoulder.stl" />
+        <mesh name="ur_simple_upperarm" file="../../ur_sim/ur10/meshes/simple_upperarm.stl" />
+        <mesh name="ur_simple_forearm" file="../../ur_sim/ur10/meshes/simple_forearm.stl" />
+        <mesh name="ur_simple_wrist1" file="../../ur_sim/ur10/meshes/simple_wrist1.stl" />
+        <mesh name="ur_simple_wrist2" file="../../ur_sim/ur10/meshes/simple_wrist2.stl" />
+        <mesh name="ur_simple_wrist3" file="../../ur_sim/ur10/meshes/simple_wrist3.stl" />
 
         <material name="ur_MatColl" specular="1" shininess=".3" reflectance="0.5" rgba=".4 .5 .6 1"/>
         <material name="ur_MatViz" specular="1" shininess=".1" reflectance="0.5" rgba=".9 .9 .9 1"/>
@@ -35,22 +35,42 @@
 	<default>
         <default class="ur">
     		<joint limited="true" damping="50" armature=".001" margin="0.01" frictionloss="100"/>
+            <general biastype="affine" ctrlrange="-6.2831 6.2831"/>
             <default class="ur_viz">
                 <geom material="ur_MatViz" contype="0" conaffinity="0" group="1" type="mesh"/>
             </default>
             <default class="ur_coll">
                 <geom material="ur_MatColl" contype="0" conaffinity="1" group="4" type="mesh"/>
             </default>
+            <default class="ur10_base">
+                <general gainprm="5000" biasprm="0 -5000 -500" forcerange="-330 330"/>
+            </default>
+            <default class="ur10_elbow">
+                <general gainprm="1000" biasprm="0 -1000 -100" forcerange="-150 150"/>
+            </default>
+            <default class="ur10_wrist">
+                <general gainprm="500" biasprm="0 -500 -100" forcerange="-56 56"/>
+            </default>
         </default>
 	</default>
 
     <actuator>
-		<position name="ur_shoulder_pan_joint" joint="ur_shoulder_pan_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="1000"/>
-		<position name="ur_shoulder_lift_joint" joint="ur_shoulder_lift_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="1000"/>
-		<position name="ur_elbow_joint" joint="ur_elbow_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="600"/>
-		<position name="ur_wrist_1_joint" joint="ur_wrist_1_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="200"/>
-		<position name="ur_wrist_2_joint" joint="ur_wrist_2_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="200"/>
-		<position name="ur_wrist_3_joint" joint="ur_wrist_3_joint" ctrllimited='true' ctrlrange="-1.57 1.57" kp="200"/>
+		<general class="ur10_base"  name="shoulder_pan_joint"  joint="ur_shoulder_pan_joint"/>
+		<general class="ur10_base"  name="shoulder_lift_joint" joint="ur_shoulder_lift_joint"/>
+		<general class="ur10_elbow" name="elbow_joint"         joint="ur_elbow_joint"/>
+		<general class="ur10_wrist" name="wrist_1_joint"       joint="ur_wrist_1_joint"/>
+		<general class="ur10_wrist" name="wrist_2_joint"       joint="ur_wrist_2_joint"/>
+		<general class="ur10_wrist" name="wrist_3_joint"       joint="ur_wrist_3_joint"/>
 	</actuator>
+
+    <sensor>
+        <jointpos name="shoulder_pan_joint" joint="ur_shoulder_pan_joint"/>
+        <jointpos name="shoulder_lift_joint" joint="ur_shoulder_lift_joint"/>
+        <jointpos name="elbow_joint"   joint="ur_elbow_joint"/>
+        <jointpos name="wrist_1_joint" joint="ur_wrist_1_joint"/>
+        <jointpos name="wrist_2_joint" joint="ur_wrist_2_joint"/>
+        <jointpos name="wrist_3_joint" joint="ur_wrist_3_joint"/>
+    </sensor>
+
 
 </mujocoinclude>

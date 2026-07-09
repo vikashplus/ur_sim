@@ -6,7 +6,7 @@
     source  :: https://github.com/vikashplus/ur_sim
 ====================================================== -->
 
-<body name="ur_ur_base_link" pos="0 0 .74" childclass="ur">
+<body name="ur_ur_base_link" euler="0 0 1.57" pos="0 0 .74" childclass="ur">
     <inertial pos="0 0 0" quat="0.5 0.5 -0.5 0.5" mass="4" diaginertia="0.01125 0.00610633 0.00610633"/>
     <geom class="ur_viz" mesh="ur_base"/>
     <geom class="ur_coll" mesh="ur_simple_base"/>
