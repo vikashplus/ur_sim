@@ -17,7 +17,7 @@
         <mesh name="ur_wrist3" file="../../ur_sim/ur10/meshes/wrist3.stl" />
         <mesh name="ur_simple_base" file="../../ur_sim/ur10/meshes/simple_base.stl" />
         <mesh name="ur_simple_shoulder" file="../../ur_sim/ur10/meshes/simple_shoulder.stl" />
-        <mesh name="ur_simple_upperarm" file="../../ur_sim/ur10/meshes/simple_upperarm.stl" />
+        <mesh name="ur_simple_upperarm" file="../../ur_sim/ur10/meshes/simple_upperArm.stl" />
         <mesh name="ur_simple_forearm" file="../../ur_sim/ur10/meshes/simple_forearm.stl" />
         <mesh name="ur_simple_wrist1" file="../../ur_sim/ur10/meshes/simple_wrist1.stl" />
         <mesh name="ur_simple_wrist2" file="../../ur_sim/ur10/meshes/simple_wrist2.stl" />
