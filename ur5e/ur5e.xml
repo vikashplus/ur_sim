@@ -1,16 +1,42 @@
-<mujoco model="ur5e">
 <!-- =================================================
     Copyright 2026 Vikash Kumar
-    Model   :: UR (MuJoCoV3.0)
+    Model   :: UR-5e (MuJoCoV3.0)
     Author  :: Vikash Kumar (vikashplus@gmail.com)
     source  :: https://github.com/vikashplus/ur_sim
 ====================================================== -->
+<mujoco model="ur5e">
 
-<include file="assets/assets.xml"/>
+    <include file="assets/assets.xml"/>
 
-<worldbody>
-  <light name="spotlight" mode="trackcom" pos="0 -1 2"/>
-  <include file="assets/chain.xml"/>
-</worldbody>
+    <asset>
+        <texture name="ur_groundplane" type="2d" builtin="checker" rgb1=".25 .26 .25"
+          rgb2=".22 .22 .22" width="100" height="100" mark="none" markrgb=".8 .8 .8"/>
+        <material name="ur5e_MatGnd" texture="ur_groundplane"  texrepeat="5 5" specular="1" shininess=".3" reflectance="0.00001"/>
+        <material name="ur5e_MatViz" specular="1" shininess=".1" reflectance="0.5" rgba=".9 .9 .9 1"/>
 
+        <mesh name="ur_pedestal" file="../ur10/meshes/pedestal.stl" scale='.001 .001 .001'/>
+    </asset>
+
+    <default>
+        <default class="ur5e_viz">
+          <geom material="ur5e_MatViz" contype="0" conaffinity="0" group="1" type="mesh"/>
+        </default>
+    </default>
+
+
+    <worldbody>
+
+				<light directional="false" cutoff="40" diffuse=".3 .3 .35" specular=".1 .1 .1" pos="1 .3 5" dir="-1 -.1 -5 "/>
+
+				<!-- ======= Ground ======= -->
+				<geom name="ground" type="plane" pos="0 0 0" material="ur5e_MatGnd" size="5 5 2" contype="1" conaffinity="1"/>
+				<geom class="ur5e_viz" name='ur_pedestal' pos='0 0 0' type='mesh' mesh='ur_pedestal' euler='0 0 0'/>
+				<frame euler="0 0 1.57" pos="0 0 .74">
+						<include file="assets/chain.xml"/>
+				</frame>
+    </worldbody>
+
+    <keyframe>
+        <key name="home" qpos="-1.5708 -1.5708 1.5708 -1.5708 -1.5708 0" ctrl="-1.5708 -1.5708 1.5708 -1.5708 -1.5708 0"/>
+    </keyframe>
 </mujoco>

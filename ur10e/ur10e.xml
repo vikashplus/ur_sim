@@ -1,145 +1,42 @@
+<!-- =================================================
+    Copyright 2026 Vikash Kumar
+    Model   :: UR-10e (MuJoCoV3.0)
+    Author  :: Vikash Kumar (vikashplus@gmail.com)
+    source  :: https://github.com/vikashplus/ur_sim
+====================================================== -->
 <mujoco model="ur10e">
-  <compiler angle="radian" meshdir="assets" autolimits="true"/>
 
-  <option integrator="implicitfast"/>
+    <include file="assets/assets.xml"/>
 
-  <default>
-    <default class="ur10e">
-      <material specular="0.5" shininess="0.25"/>
-      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1"/>
-      <position ctrlrange="-6.2831 6.2831"/>
-      <general biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="5000" biasprm="0 -5000 -500"/>
-      <default class="size4">
-        <joint damping="10"/>
-        <general forcerange="-330 330"/>
-      </default>
-      <default class="size3">
-        <joint damping="5"/>
-        <general forcerange="-150 150"/>
-        <default class="size3_limited">
-          <joint range="-3.1415 3.1415"/>
-          <general ctrlrange="-3.1415 3.1415"/>
+    <asset>
+        <texture name="ur_groundplane" type="2d" builtin="checker" rgb1=".25 .26 .25"
+          rgb2=".22 .22 .22" width="100" height="100" mark="none" markrgb=".8 .8 .8"/>
+        <material name="ur10e_MatGnd" texture="ur_groundplane"  texrepeat="5 5" specular="1" shininess=".3" reflectance="0.00001"/>
+        <material class="ur10e" name="ur10e_MatViz" specular="1" shininess=".1" reflectance="0.5" rgba=".9 .9 .9 1"/>
+
+        <mesh name="ur_pedestal" file="../ur10/meshes/pedestal.stl" scale='.001 .001 .001'/>
+    </asset>
+
+    <default>
+        <default class="ur10e_viz">
+          <geom material="ur10e_MatViz" contype="0" conaffinity="0" group="1" type="mesh"/>
         </default>
-      </default>
-      <default class="size2">
-        <joint damping="2"/>
-        <general forcerange="-56 56"/>
-      </default>
-      <default class="visual">
-        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
-      </default>
-      <default class="collision">
-        <geom type="capsule" group="3"/>
-        <default class="eef_collision">
-          <geom type="cylinder"/>
-        </default>
-      </default>
-      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/>
     </default>
-  </default>
 
-  <asset>
-    <material class="ur10e" name="black" rgba="0.033 0.033 0.033 1"/>
-    <material class="ur10e" name="jointgray" rgba="0.278 0.278 0.278 1"/>
-    <material class="ur10e" name="linkgray" rgba="0.82 0.82 0.82 1"/>
-    <material class="ur10e" name="urblue" rgba="0.49 0.678 0.8 1"/>
 
-    <mesh file="base_0.obj"/>
-    <mesh file="base_1.obj"/>
-    <mesh file="shoulder_0.obj"/>
-    <mesh file="shoulder_1.obj"/>
-    <mesh file="shoulder_2.obj"/>
-    <mesh file="upperarm_0.obj"/>
-    <mesh file="upperarm_1.obj"/>
-    <mesh file="upperarm_2.obj"/>
-    <mesh file="upperarm_3.obj"/>
-    <mesh file="forearm_0.obj"/>
-    <mesh file="forearm_1.obj"/>
-    <mesh file="forearm_2.obj"/>
-    <mesh file="forearm_3.obj"/>
-    <mesh file="wrist1_0.obj"/>
-    <mesh file="wrist1_1.obj"/>
-    <mesh file="wrist1_2.obj"/>
-    <mesh file="wrist2_0.obj"/>
-    <mesh file="wrist2_1.obj"/>
-    <mesh file="wrist2_2.obj"/>
-    <mesh file="wrist3.obj"/>
-  </asset>
+    <worldbody>
 
-  <worldbody>
-    <light name="spotlight" mode="targetbodycom" target="wrist_2_link" pos="0 -1 2"/>
-    <body name="base" quat="0 0 0 -1" childclass="ur10e">
-      <inertial mass="4.0" pos="0 0 0" diaginertia="0.0061063308908 0.0061063308908 0.01125"/>
-      <geom mesh="base_0" material="black" class="visual"/>
-      <geom mesh="base_1" material="jointgray" class="visual"/>
-      <body name="shoulder_link" pos="0 0 0.181">
-        <inertial pos="0 0 0" mass="7.778" diaginertia="0.0314743 0.0314743 0.0218756"/>
-        <joint name="shoulder_pan_joint" class="size4" axis="0 0 1"/>
-        <geom mesh="shoulder_0" material="urblue" class="visual"/>
-        <geom mesh="shoulder_1" material="black" class="visual"/>
-        <geom mesh="shoulder_2" material="jointgray" class="visual"/>
-        <geom class="collision" size="0.078 0.08" pos="0 0 -0.05"/>
-        <body name="upper_arm_link" pos="0 0.176 0" quat="1 0 1 0">
-          <inertial pos="0 0 0.3065" mass="12.93" diaginertia="0.423074 0.423074 0.0363656"/>
-          <joint name="shoulder_lift_joint" class="size4"/>
-          <geom mesh="upperarm_0" material="black" class="visual"/>
-          <geom mesh="upperarm_1" material="jointgray" class="visual"/>
-          <geom mesh="upperarm_2" material="urblue" class="visual"/>
-          <geom mesh="upperarm_3" material="linkgray" class="visual"/>
-          <geom class="collision" pos="0 -0.05 0" quat="1 1 0 0" size="0.078 0.08"/>
-          <geom class="collision" size="0.06 0.3" pos="0 0 0.3"/>
-          <body name="forearm_link" pos="0 -0.137 0.613">
-            <inertial pos="0 0 0.2855" mass="3.87" diaginertia="0.11059 0.11059 0.0108844"/>
-            <joint name="elbow_joint" class="size3_limited"/>
-            <geom mesh="forearm_0" material="urblue" class="visual"/>
-            <geom mesh="forearm_1" material="black" class="visual"/>
-            <geom mesh="forearm_2" material="jointgray" class="visual"/>
-            <geom mesh="forearm_3" material="linkgray" class="visual"/>
-            <geom class="collision" pos="0 0.08 0" quat="1 1 0 0" size="0.058 0.065"/>
-            <geom class="collision" size="0.043 0.28" pos="0 0 0.29"/>
-            <body name="wrist_1_link" pos="0 0 0.571" quat="1 0 1 0">
-              <inertial pos="0 0.135 0" quat="0.5 0.5 -0.5 0.5" mass="1.96"
-                diaginertia="0.0055125 0.00510825 0.00510825"/>
-              <joint name="wrist_1_joint" class="size2"/>
-              <geom mesh="wrist1_0" material="black" class="visual"/>
-              <geom mesh="wrist1_1" material="urblue" class="visual"/>
-              <geom mesh="wrist1_2" material="jointgray" class="visual"/>
-              <geom class="collision" pos="0 0.06 0" quat="1 1 0 0" size="0.05 0.07"/>
-              <body name="wrist_2_link" pos="0 0.135 0">
-                <inertial pos="0 0 0.12" quat="0.5 0.5 -0.5 0.5" mass="1.96"
-                  diaginertia="0.0055125 0.00510825 0.00510825"/>
-                <joint name="wrist_2_joint" axis="0 0 1" class="size2"/>
-                <geom mesh="wrist2_0" material="black" class="visual"/>
-                <geom mesh="wrist2_1" material="urblue" class="visual"/>
-                <geom mesh="wrist2_2" material="jointgray" class="visual"/>
-                <geom class="collision" size="0.046 0.065" pos="0 0 0.05"/>
-                <geom class="collision" pos="0 0.028 0.12" quat="1 1 0 0" size="0.046 0.043"/>
-                <body name="wrist_3_link" pos="0 0 0.12">
-                  <inertial pos="0 0.092 0" quat="0 1 -1 0" mass="0.202"
-                    diaginertia="0.000204525 0.000144346 0.000144346"/>
-                  <joint name="wrist_3_joint" class="size2"/>
-                  <geom material="linkgray" mesh="wrist3" class="visual"/>
-                  <geom class="eef_collision" pos="0 0.097 0" quat="1 1 0 0" size="0.046 0.02"/>
-                  <site name="attachment_site" pos="0 0.1 0" quat="-1 1 0 0"/>
-                </body>
-              </body>
-            </body>
-          </body>
-        </body>
-      </body>
-    </body>
-  </worldbody>
+				<light directional="false" cutoff="40" diffuse=".3 .3 .35" specular=".1 .1 .1" pos="1 .3 5" dir="-1 -.1 -5 "/>
 
-  <actuator>
-    <general class="size4" name="shoulder_pan" joint="shoulder_pan_joint"/>
-    <general class="size4" name="shoulder_lift" joint="shoulder_lift_joint"/>
-    <general class="size3_limited" name="elbow" joint="elbow_joint"/>
-    <general class="size2" name="wrist_1" joint="wrist_1_joint"/>
-    <general class="size2" name="wrist_2" joint="wrist_2_joint"/>
-    <general class="size2" name="wrist_3" joint="wrist_3_joint"/>
-  </actuator>
+				<!-- ======= Ground ======= -->
+				<geom name="ground" type="plane" pos="0 0 0" material="ur10e_MatGnd" size="5 5 2" contype="1" conaffinity="1"/>
+				<geom class="ur10e_viz" name='ur_pedestal' pos='0 0 0' type='mesh' mesh='ur_pedestal' euler='0 0 0'/>
+				<frame euler="0 0 1.57" pos="0 0 .74">
+						<include file="assets/chain.xml"/>
+				</frame>
+    </worldbody>
 
-  <keyframe>
-    <key name="home" qpos="-1.5708 -1.5708 1.5708 -1.5708 -1.5708 0" ctrl="-1.5708 -1.5708 1.5708 -1.5708 -1.5708 0"/>
-  </keyframe>
+    <keyframe>
+        <key name="home" qpos="-1.5708 -1.5708 1.5708 -1.5708 -1.5708 0" ctrl="-1.5708 -1.5708 1.5708 -1.5708 -1.5708 0"/>
+    </keyframe>
 </mujoco>
